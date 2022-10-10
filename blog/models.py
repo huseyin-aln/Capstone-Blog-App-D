@@ -53,7 +53,7 @@ class Like(models.Model):
         return self.user.username
 
 
-class PostView(models.Model):
+class PostV(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     time_stamp = models.DateTimeField(auto_now_add=True)
