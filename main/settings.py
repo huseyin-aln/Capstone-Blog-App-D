@@ -26,7 +26,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -41,9 +41,12 @@ INSTALLED_APPS = [
 
     # third-part apps
     'rest_framework',
+    'rest_framework.authtoken',
+    'dj_rest_auth',
     
     # my apps
     'blog',
+    'users',
     
 ]
 
