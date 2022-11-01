@@ -1,14 +1,14 @@
 from django.contrib import admin
 from .models import (
     Category,
-    Post,
+    Blog,
     Comment,
     Like,
-    PostV
+    PostView
 )
 
 admin.site.register(Category)
-admin.site.register(Post)
+admin.site.register(Blog)
 admin.site.register(Comment)
 admin.site.register(Like)
-admin.site.register(PostV)
+admin.site.register(PostView)

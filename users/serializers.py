@@ -2,7 +2,6 @@ from rest_framework import serializers, validators
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from dj_rest_auth.serializers import TokenSerializer
-
 from users.models import Profile
 
 
@@ -87,7 +86,7 @@ class ProfileUpdateForm(serializers.ModelSerializer):
         user_data = validated_data.pop('user')
         user = instance.user
 
-        instance.image = validated_data.get('image', instance.iamge)
+        instance.image = validated_data.get('image', instance.image)
         instance.save()   
 
         user.username = user_data.get(

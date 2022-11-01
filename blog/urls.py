@@ -1,24 +1,31 @@
-from django.urls import path
+from django.urls import path, include
 from rest_framework import routers
 from .views import (
     CategoryView,
-    CommentView,
-    LikeView,
-    PostView,
-    PostVView,
+    BlogView,
+    comment_list, 
+    like
+
+    # CommentView,
+    # LikeView
+    # PostVView,
 )
 
 
 router = routers.DefaultRouter()
+
+router.register('blog', BlogView)
 router.register('category', CategoryView)
-router.register('post', PostView)
-router.register('comment', CommentView)
-router.register('like', LikeView)
-router.register('postview', PostVView)
+
+# router.register('comment', CommentView)
+# router.register('like', LikeView)
+# router.register('postview', PostVView)
 
 
 urlpatterns = [
-    
+    path("", include(router.urls)),
+    path("likes/<int:pk>/", like, name="like"),
+    path("comments/<int:pk>/", comment_list, name="comment_list"),
 ] 
 
-urlpatterns += router.urls
+# urlpatterns += router.urls
