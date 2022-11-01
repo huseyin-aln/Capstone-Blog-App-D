@@ -3,11 +3,13 @@ from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from dj_rest_auth.serializers import TokenSerializer
 
+from users.models import Profile
+
 
 class RegisterSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
         required = True,
-        validators = [validators.UniqueValidator(queryset=User.objects.all())]
+        validators = [validators.UniqueValidator(queryset=User.objects.all(), message = "This email has been used.")]
     )
     password = serializers.CharField(
         write_only = True,
@@ -31,6 +33,10 @@ class RegisterSerializer(serializers.ModelSerializer):
             'password',
             'password1'
         )
+        extra_kwargs = {
+            'first_name': {'required': True},
+            'last_name': {'required': True}
+        }
 
     def validate(self, data):
         if data['password'] != data['password1']:
@@ -53,7 +59,8 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = (
             'username',
-            'email'
+            'email',
+            'id'
         )
 
 
@@ -65,3 +72,32 @@ class CustomTokenSerializer(TokenSerializer):
             'key',
             'user'
         )
+
+
+class ProfileUpdateForm(serializers.ModelSerializer):
+    user = UserSerializer()
+    class Meta:
+        model = Profile
+        fields = (
+            'image',
+            'user'
+        )
+
+    def update(self, instance, validated_data):
+        user_data = validated_data.pop('user')
+        user = instance.user
+
+        instance.image = validated_data.get('image', instance.iamge)
+        instance.save()   
+
+        user.username = user_data.get(
+            'username',
+            user.username
+        ) 
+        user.email = user_data.get(
+            'email', 
+            user.email
+        )
+        user.save()
+
+        return instance
