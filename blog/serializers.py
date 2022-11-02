@@ -43,7 +43,7 @@ class LikeSerializer(serializers.ModelSerializer):
 class BlogSerializer(serializers.ModelSerializer):
     author = serializers.StringRelatedField()
     category = serializers.StringRelatedField()
-    category_id = serializers.IntegerField(write_only=True)
+    # category_id = serializers.IntegerField(write_only=True)
     comments = CommentSerializer(many=True, read_only=True)
     likes = serializers.SerializerMethodField()
     post_views = serializers.SerializerMethodField()
@@ -57,7 +57,7 @@ class BlogSerializer(serializers.ModelSerializer):
             'content',
             'image',
             'category',
-            'category_id',
+            # 'category_id',
             'publish_date',
             'last_updated',
             'author',
