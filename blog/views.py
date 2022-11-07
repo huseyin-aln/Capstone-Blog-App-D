@@ -53,6 +53,7 @@ class BlogView(viewsets.ModelViewSet):
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
         PostView.objects.create(post=instance,user=request.user)
+        
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
 
