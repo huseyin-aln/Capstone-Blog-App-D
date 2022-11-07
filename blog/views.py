@@ -26,7 +26,7 @@ class BlogView(viewsets.ModelViewSet):
     serializer_class = BlogSerializer
 
     def update(self, request, *args, **kwargs):
-        instance = self.get_objects()
+        instance = self.get_object()
         if (request.user != instance.author):
             message = "You are not authorized to update this blog"
             return Response(message, status=status.HTTP_401_UNAUTHORIZED)
